@@ -28,9 +28,18 @@ ul li {
     grid-area: n;
     background: rgb(63,94,251);
     background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    font-size: 1.5rem;
+    padding: 1.5rem;
 }
 
 .content {
     grid-area: c;
     background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    font-size: 1.2rem;
+}
+
+
+.image-header{
+    height: 200px;
+    width: 1000px;
 }
