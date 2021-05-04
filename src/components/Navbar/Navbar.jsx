@@ -1,3 +1,4 @@
+import React from 'react';
 import s from './Navbar.module.css';
 
 const Navbar = () => {
@@ -7,7 +8,7 @@ const Navbar = () => {
                 <a>Profile</a>
             </div>
             <div className={s.item}>
-                <a>Messages</a>
+                <a>Dialogs</a>
             </div>
             <div className={`${s.item} ${s.active}`}>
                 <a>News</a>
