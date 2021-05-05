@@ -1,0 +1,19 @@
+.dialog {
+    color: white;
+}
+
+.dialog a {
+    text-decoration: none;
+}
+
+.dialog a:visited {
+    color: inherit;
+}
+
+.active {
+    color: #5ffbf1 !important;
+}
+
+.dialog a:hover {
+    border-bottom: 1px dashed white;
+}
