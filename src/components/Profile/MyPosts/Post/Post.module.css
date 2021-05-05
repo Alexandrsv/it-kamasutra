@@ -1,9 +1,11 @@
 .item {
     color: white;
+    margin-top: 10px;
 }
 .item img{
     height: 80px;
     border-radius: 30px;
+    vertical-align: top;
 }
 
 
