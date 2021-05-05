@@ -6,7 +6,7 @@ const Post = (props) => {
 
         <div className={s.item}>
             <img src={`https://i.pravatar.cc/80?img=${Math.floor(Math.random() * 50)}`} alt={'ava'}/>
-            {props.message}
+            <span className={s.text}>{props.message}</span>
             <div>
                 <span>{props.like_count} ❤</span>
             </div>

@@ -5,10 +5,14 @@
 .item img{
     height: 80px;
     border-radius: 30px;
-    vertical-align: top;
 }
 
 
 .posts {
 
+}
+
+.text {
+    padding: 0 20px;
+    vertical-align: top;
 }
