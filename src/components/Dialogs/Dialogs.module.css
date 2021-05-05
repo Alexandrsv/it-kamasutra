@@ -7,18 +7,30 @@
     padding: 10px;
 }
 
-.dialogs_items .active {
-    color: #5ffbf1;
-}
-
-.dialogs_items.dialog {
-
+.dialogs_items .dialog {
+    color: white;
 }
 
 .messages {
     padding: 10px;
 }
 
-.messages.message {
+.messages .message {
 
+}
+
+.dialog a {
+    text-decoration: none;
+}
+
+.dialog a:visited {
+    color:inherit;
+}
+
+.active {
+    color: #5ffbf1!important;
+}
+
+.dialog a:hover {
+    border-bottom: 1px dashed white;
 }
