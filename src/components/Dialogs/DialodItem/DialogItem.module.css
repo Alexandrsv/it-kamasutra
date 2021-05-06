@@ -1,5 +1,8 @@
 .dialog {
     color: white;
+    padding: 10px;
+    height: 70px;
+    vertical-align: middle;
 }
 
 .dialog a {
@@ -16,4 +19,14 @@
 
 .dialog a:hover {
     border-bottom: 1px dashed white;
+}
+
+.dialog img {
+    height: 70px;
+    border-radius: 30px;
+    vertical-align: middle;
+}
+
+a span{
+    padding: 10px;
 }

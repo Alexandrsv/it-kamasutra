@@ -1,10 +1,12 @@
 .dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
+    grid-template-columns: 4fr 10fr;
+    text-align: start;
 }
 
 .dialogs_items {
     padding: 10px;
+    vertical-align: top!important;
 }
 
 .dialogs_items .dialog {
