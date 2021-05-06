@@ -23,6 +23,7 @@ const App = (props) => {
                         {...pr}
                         {...props.state.profilePage}
                         addPost={props.addPost}
+                        updateNewPostText={props.updateNewPostText}
                     />}/>
                 </div>
             </div>

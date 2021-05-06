@@ -6,6 +6,7 @@ let state = {
             {id: "1", message: 'Привет, ты как?', like_count: 12},
             {id: "2", message: 'Мой первый пост', like_count: 20},
         ],
+        newPostText: 'Win!',
     },
     messagePage: {
         messages: [
@@ -24,15 +25,21 @@ let state = {
 
 }
 
-export const addPost = (postMessage) => {
+export const addPost = () => {
     let newPost = {
-        id:5,
-        message: postMessage,
+        id: 5,
+        message: state.profilePage.newPostText,
         like_count: 0
     }
     state.profilePage.posts.push(newPost)
-    console.log('STATE',state)
+    updateNewPostText('')
     rerenderEntireTree(state)
+}
+
+export const updateNewPostText = (newText) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+    console.log(state)
 }
 
 export default state;
