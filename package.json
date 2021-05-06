@@ -1,11 +1,13 @@
 {
   "name": "it-kamasutra",
   "version": "0.1.0",
+  "homepage": "http://alexandrsv.github.io/it-kamasutra",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "gh-pages": "^3.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
@@ -16,7 +18,8 @@
     "start": "BROWSER='google-chrome-stable' react-scripts start",
     "build": "BROWSER='google-chrome-stable' react-scripts build",
     "test": "BROWSER='google-chrome-stable' react-scripts test",
-    "eject": "BROWSER='google-chrome-stable' react-scripts eject"
+    "eject": "BROWSER='google-chrome-stable' react-scripts eject",
+    "deploy": "gh-pages -d ./build -b pages"
   },
   "eslintConfig": {
     "extends": [
