@@ -5,3 +5,8 @@
 .posts {
     padding: 10px 0;
 }
+
+.posts_block textarea{
+    width: 400px;
+    height: 100px;
+}
