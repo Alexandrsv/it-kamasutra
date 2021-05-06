@@ -5,6 +5,7 @@ import Post from "./Post/Post";
 const MyPosts = (props) => {
     const addPost = () => {
         let text = newPostElement.current.value
+        newPostElement.current.value = ''
         props.addPost(text)
     }
     let newPostElement = React.createRef()
