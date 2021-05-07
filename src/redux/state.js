@@ -1,4 +1,7 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = () => {
+    console.log('rerenderEntireTree')
+}
+
 
 let state = {
     profilePage: {
@@ -25,6 +28,8 @@ let state = {
 
 }
 
+window.state = state
+
 export const addPost = () => {
     let newPost = {
         id: 5,
@@ -40,6 +45,10 @@ export const updateNewPostText = (newText) => {
     state.profilePage.newPostText = newText
     rerenderEntireTree(state)
     console.log(state)
+}
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer
 }
 
 export default state;
