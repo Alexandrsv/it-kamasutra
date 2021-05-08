@@ -22,6 +22,7 @@ const App = (props) => {
                         {...pr}
                         {...props.state.profilePage}
                         dispatch={props.dispatch}
+                        store={props.store}
                     />}/>
                 </div>
             </div>
