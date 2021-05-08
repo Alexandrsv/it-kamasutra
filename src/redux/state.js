@@ -1,4 +1,3 @@
-
 let store = {
     _state: {
         profilePage: {
@@ -30,28 +29,26 @@ let store = {
     getState() {
         return this._state
     },
-    addPost() {
-
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            like_count: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this.updateNewPostText('')
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText) {
-        console.log('STATE', this._state)
-
-
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-        console.log(this._state)
-    },
     subscribe(observer) {
         this._callSubscriber = observer
-    }
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                like_count: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this.dispatch({type:'UPDATE-NEW_POST_TEXT', newText:''})
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW_POST_TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+            console.log(this._state)
+        }
+    },
 }
 
 window.state = store
