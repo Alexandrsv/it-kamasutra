@@ -6,8 +6,6 @@ import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route} from "react-router-dom";
 
 
-
-
 const App = (props) => {
     return (
         <BrowserRouter>
@@ -17,7 +15,8 @@ const App = (props) => {
                 <div className={'app-wrapper-content'}>
                     <Route path={'/dialogs'} render={(pr)=><Dialogs
                         {...pr}
-                        {...props.state.messagePage}
+                        dispatch={props.dispatch}
+                        store={props.store}
                     />}/>
                     <Route path={'/profile'} render={(pr)=><Profile
                         {...pr}
