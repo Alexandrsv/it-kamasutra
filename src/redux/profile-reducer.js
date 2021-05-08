@@ -1,9 +1,16 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 
-export const ADD_POST = 'ADD-POST'
-export const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+let initialState = {
+    posts: [
+        {id: "1", message: 'Привет, ты как?', like_count: 12},
+        {id: "2", message: 'Мой первый пост', like_count: 20},
+    ],
+    newPostText: 'Win!',
+}
 
-const profileReducer = (state, action) => {
-    switch (action.type){
+const profileReducer = (state = initialState, action) => {
+    switch (action.type) {
         case ADD_POST:
             let newPost = {
                 id: Math.floor(Math.random() * 500),
@@ -11,6 +18,7 @@ const profileReducer = (state, action) => {
                 like_count: 0
             }
             state.posts.push(newPost)
+            state.newPostText = ''
             return state
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText

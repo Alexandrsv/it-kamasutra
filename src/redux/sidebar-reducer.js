@@ -1,6 +1,8 @@
-
-const sidebarReducer = (state, action) => {
-    switch (action.type){
+let initialState = {
+    qwe: 123
+}
+const sidebarReducer = (state = initialState, action) => {
+    switch (action.type) {
         case '123':
             return state
         default:
