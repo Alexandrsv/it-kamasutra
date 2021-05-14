@@ -7,8 +7,8 @@ const Profile = (props) => {
 
     return (
         <div className={s.content}>
-            <ProfileInfo/>
-            <MyPostsContainer/>
+            <ProfileInfo />
+            <MyPostsContainer />
         </div>
     );
 };
