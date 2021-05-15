@@ -10,7 +10,6 @@ let Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     // let pages = Array(pagesCount).fill(1).map((e, index) => index + 1) //Слишком много страниц, позже норм сделаю
     let pages = Array(20).fill(1).map((e, index) => index + 1)
-
     return (
         <div>
             <div className={s.pNum}>
@@ -31,26 +30,28 @@ let Users = (props) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {
+                            ? <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
+                                props.toggleFollowing(true, u.id)
+                                usersAPI.unfollow(u.id)
+                                    .then(response => {
+                                        // this.props.toggleIsFetching(false)
+                                        if (response.resultCode === 0) {
+                                            props.unfollow(u.id)
+                                        }
+                                        props.toggleFollowing(false, u.id)
+                                    })
+                            }}>
+                                Unofllow
+                                     </button>
+                            : <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
+                                props.toggleFollowing(true, u.id)
                                 usersAPI.follow(u.id)
                                     .then(response => {
                                         // this.props.toggleIsFetching(false)
                                         if (response.resultCode === 0) {
                                             props.follow(u.id)
                                         }
-                                    })
-                                props.unfollow(u.id)
-
-                            }}>
-                                Unofllow
-                                     </button>
-                            : <button onClick={() => {
-                                usersAPI.unfollow(u.id)
-                                    .then(response => {
-                                        // this.props.toggleIsFetching(false)
-                                        if (response.resultCode === 0) {
-                                            props.follow(u.id)
-                                        }
+                                        props.toggleFollowing(false, u.id)
                                     })
 
 
