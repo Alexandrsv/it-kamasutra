@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getProfileData, setUserProfile } from '../../redux/profile-reducer'
+import { getProfileData } from '../../redux/profile-reducer'
 import { withRouter } from 'react-router';
-import { usersAPI } from '../../api/api'
 
 class ProfileContainer extends React.Component {
 
