@@ -40,7 +40,7 @@ export const updateNewPostTextCreator = (text) => ({ type: UPDATE_NEW_POST_TEXT,
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
 
-export const getProfileData = (userId) => {
+export const getUserProfileData = (userId) => {
     return (dispatch) => {
         usersAPI.getProfileData(userId)
             .then(response => {
