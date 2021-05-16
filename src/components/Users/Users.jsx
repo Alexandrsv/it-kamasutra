@@ -30,34 +30,16 @@ let Users = (props) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
-                                props.toggleFollowing(true, u.id)
-                                usersAPI.unfollow(u.id)
-                                    .then(response => {
-                                        // this.props.toggleIsFetching(false)
-                                        if (response.resultCode === 0) {
-                                            props.unfollow(u.id)
-                                        }
-                                        props.toggleFollowing(false, u.id)
-                                    })
-                            }}>
+                            ? <button
+                                disabled={props.followingProgress.some(id => id === u.id)}
+                                onClick={() => { props.follow(u.id) }}>
                                 Unofllow
-                                     </button>
-                            : <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
-                                props.toggleFollowing(true, u.id)
-                                usersAPI.follow(u.id)
-                                    .then(response => {
-                                        // this.props.toggleIsFetching(false)
-                                        if (response.resultCode === 0) {
-                                            props.follow(u.id)
-                                        }
-                                        props.toggleFollowing(false, u.id)
-                                    })
-
-
-                            }}>
+                            </button>
+                            : <button
+                                disabled={props.followingProgress.some(id => id === u.id)}
+                                onClick={() => { props.follow(u.id) }}>
                                 Follow
-                                     </button>}
+                            </button>}
 
                     </div>
                 </span>

@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api"
+
 const SET_USER_DATA = 'SET_USER_DATA'
 const UNFOLLOW = 'UNFOLLOW'
 
@@ -23,5 +25,19 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } })
+
+
+export const authMe = () => {
+    return (dispatch) => {
+        usersAPI.authMe()
+            .then(response => {
+                // this.props.toggleIsFetching(false)
+                if (response.resultCode === 0) {
+                    let { id, login, email } = response.data
+                    dispatch(setAuthUserData(id, email, login))
+                }
+            })
+    }
+}
 
 export default authReducer

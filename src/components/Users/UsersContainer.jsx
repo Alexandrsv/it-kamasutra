@@ -1,34 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress } from '../../redux/users-reducer'
+import { getUsers, follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress } from '../../redux/users-reducer'
 import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
-import { usersAPI } from '../../api/api'
 
 class UserContainer extends React.Component {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(response => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(response.items)
-                this.props.setTotalUsersCount(response.totalCount)
-            })
-
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
     onPageChanged = (pageNumber) => {
-        this.props.toggleIsFetching(true)
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
         this.props.setCurrentPage(pageNumber)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(response => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(response.items)
-            })
     }
-    
+
     render() {
-        // debugger
         return <>
             {this.props.isFetching
                 ? <Preloader />
@@ -64,7 +50,6 @@ export default connect(mapStateToProps, {
     unfollow,
     setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFetching,
     toggleFollowingProgress,
+    getUsers,
 })(UserContainer)
