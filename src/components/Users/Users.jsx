@@ -7,8 +7,8 @@ import { NavLink } from 'react-router-dom'
 let Users = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    // let pages = Array(pagesCount).fill(1).map((e, index) => index + 1) //Слишком много страниц, позже норм сделаю
-    let pages = Array(20).fill(1).map((e, index) => index + 1)
+    let pages = Array(pagesCount).fill(1).map((e, index) => index + 1) //Слишком много страниц, позже норм сделаю
+    // let pages = Array(20).fill(1).map((e, index) => index + 1)
     return (
         <div>
             <div className={s.pNum}>
