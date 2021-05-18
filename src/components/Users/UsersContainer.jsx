@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {follow, getUsers, setCurrentPage, setUsers, toggleFollowingProgress, unfollow} from '../../redux/users-reducer'
 import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 class UserContainer extends React.Component {
@@ -56,4 +55,5 @@ export default compose(
         toggleFollowingProgress,
         getUsers,
     }),
-    withAuthRedirect)(UserContainer)
+    // withAuthRedirect
+    )(UserContainer)

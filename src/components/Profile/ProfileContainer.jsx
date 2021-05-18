@@ -9,6 +9,9 @@ class ProfileContainer extends React.Component {
 
     componentDidMount() {
         let userId = this.props.match.params.userId || this.props.authorizedUserId
+        if (!userId){
+            this.props.history.push('login')
+        }
         this.props.getUserProfileData(userId)
         this.props.getStatus(userId)
     }
@@ -16,6 +19,9 @@ class ProfileContainer extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.userId !== this.props.match.params.userId) {
             let userId = this.props.match.params.userId || this.props.authorizedUserId
+            if (!userId){
+                this.props.history.push('login')
+            }
             this.props.getUserProfileData(userId)
             this.props.getStatus(userId)
         }

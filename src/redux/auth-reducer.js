@@ -27,7 +27,7 @@ export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USE
 
 export const getAuthUserData = () => {
     return (dispatch) => {
-        authAPI.me()
+        return authAPI.me()
             .then(response => {
                 // this.props.toggleIsFetching(false)
                 if (response.resultCode === 0) {
