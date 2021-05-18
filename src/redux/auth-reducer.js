@@ -1,4 +1,4 @@
-import { authAPI } from "../api/api"
+import {authAPI} from "../api/api"
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -15,15 +15,13 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
-
             }
         default:
             return state
     }
 }
 
-export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } })
+export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, data: {userId, email, login, isAuth}})
 
 
 export const getAuthUserData = () => {
@@ -32,8 +30,30 @@ export const getAuthUserData = () => {
             .then(response => {
                 // this.props.toggleIsFetching(false)
                 if (response.resultCode === 0) {
-                    let { id, login, email } = response.data
-                    dispatch(setAuthUserData(id, email, login))
+                    let {id, login, email} = response.data
+                    dispatch(setAuthUserData(id, email, login, true))
+                }
+            })
+    }
+}
+
+export const login = (email, password, rememberMe) => {
+    return (dispatch) => {
+        authAPI.login(email, password, rememberMe)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(getAuthUserData())
+                }
+            })
+    }
+}
+
+export const logout = () => {
+    return (dispatch) => {
+        authAPI.logout()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setAuthUserData(null, null, null, false))
                 }
             })
     }
