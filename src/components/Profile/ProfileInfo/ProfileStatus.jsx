@@ -1,8 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ProfileStatus = (props) => {
     const [editMode, setEditMode] = useState(false)
     const [status, setStatus] = useState(props.status)
+
+
+    // TODO Дочитать статью про useEffect - https://habr.com/ru/company/ruvds/blog/445276/
+
+    useEffect(()=>{
+        setStatus(props.status)
+    },[props.status])
 
     const activateEditMode = () => {
         setEditMode(true)
@@ -16,14 +23,6 @@ const ProfileStatus = (props) => {
         setStatus(e.currentTarget.value)
     }
 
-    // TODO Прочесть статью - https://habr.com/ru/company/ruvds/blog/445276/
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (prevProps.status !== this.props.status) {
-    //         this.setState({
-    //             status: this.props.status
-    //         })
-    //     }
-    // }
 
 
     return (
