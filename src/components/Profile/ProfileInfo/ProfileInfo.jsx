@@ -2,27 +2,24 @@ import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatus from "./ProfileStatus";
+import avaPlaceholder from '../../../assets/images/avatar-placeholder.png'
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({profile, status, updateStatus}) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader/>
     }
 
     return (
         <>
-            {/*<div>*/}
-            {/*    <img className={s.image_header} src={'https://coverfiles.alphacoders.com/360/36044.jpg'}*/}
-            {/*        alt={'header'} />*/}
-            {/*</div>*/}
             <div className={s.description_block}>
-                <h2>{props.profile.fullName}</h2>
-                <img src={props.profile.photos.large} alt=""/>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-                <div>aboutMe - {props.profile.aboutMe}</div>
-                <div>lookingForAJobDescription - {props.profile.lookingForAJobDescription}</div>
+                <h2>{profile.fullName}</h2>
+                <img className={s.avatarImg} src={profile.photos.large || avaPlaceholder} alt=""/>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
+                <div>aboutMe - {profile.aboutMe}</div>
+                <div>lookingForAJobDescription - {profile.lookingForAJobDescription}</div>
                 <br/>
-                <div>{Object.entries(props.profile.contacts).map((i, index) => {
+                <div>{Object.entries(profile.contacts).map((i, index) => {
                     let url
                     if (!/^https?:\/\//.test(i[1]) && i[1]) {
                         url = 'https://' + i[1]

@@ -9,7 +9,7 @@ import Login from "./components/Login/Login";
 import {Component} from "react";
 import {logout} from "./redux/auth-reducer";
 import {connect} from "react-redux";
-import {compose} from "redux";
+import {compose} from 'redux';
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
@@ -28,10 +28,10 @@ class App extends Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
+                    <Route path={'/login'} render={() => <Login/>}/>
                     <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
                     <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
                     <Route path={'/users'} render={() => <UsersContainer/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
                 </div>
             </div>
         );

@@ -23,16 +23,16 @@ import {
 class UserContainer extends React.Component {
 
     componentDidMount() {
-        this.props.getUsersTh(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsersTh(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUsersTh(this.props.currentPage, this.props.pageSize)
-        this.props.setCurrentPage(pageNumber)
+        const {pageSize} = this.props
+        this.props.getUsersTh(pageNumber, pageSize)
     }
 
     render() {
-        console.log('!!!!render')
         return <>
             {this.props.isFetching
                 ? <Preloader/>
@@ -53,7 +53,6 @@ class UserContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        // users: getUsers(state),
         users: getUsers(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
@@ -73,4 +72,4 @@ export default compose(
         getUsersTh: requestUsers,
     }),
     // withAuthRedirect
-    )(UserContainer)
+)(UserContainer)
