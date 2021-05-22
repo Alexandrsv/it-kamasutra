@@ -9,7 +9,7 @@ let Users = (props) => {
     return (
         <div>
             <div className={s.pNum}>
-                <Paginator {...props}/>
+                <Paginator totalItemsCount={props.totalUsersCount}{...props}/>
             </div>
             <div>
                 {props.users.map(u => <User key={u.id} user={u} follow={props.follow} unfollow={props.unfollow}
