@@ -22,8 +22,8 @@ let Paginator = ({currentPage, onPageChanged, totalItemsCount, pageSize}) => {
     }
 
     return <div className={s.paginator}>
-        <span onClick={() => nextChunk(-100)}>{'<100'}</span>&nbsp;
-        <span onClick={() => nextChunk(-10)}>{'<10'}&nbsp;&nbsp;&nbsp;</span>
+        {currentPage > 100 && <span onClick={() => nextChunk(-100)}>{'<100'}&nbsp;</span>}
+        {currentPage > 10 && <span onClick={() => nextChunk(-10)}>{'<10'}&nbsp;&nbsp;&nbsp;</span>}
         {pages.map((p) => {
             return <span
                 onClick={() => onPageChanged(p)}
@@ -32,8 +32,8 @@ let Paginator = ({currentPage, onPageChanged, totalItemsCount, pageSize}) => {
             > {p} </span>
 
         })}
-        <span onClick={() => nextChunk(10)}>&nbsp;&nbsp;&nbsp;{'10>'}</span>&nbsp;
-        <span onClick={() => nextChunk(100)}>{'100>'}</span>
+        {currentPage + 10 < pagesCount && <span onClick={() => nextChunk(10)}>&nbsp;&nbsp;&nbsp;{'10>'}&nbsp;</span>}
+        {currentPage + 100 < pagesCount && <span onClick={() => nextChunk(100)}>{'100>'}</span>}
     </div>
 
 }
