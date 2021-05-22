@@ -4,17 +4,28 @@ import s from './ProfileInfo.module.css';
 import ProfileStatus from "./ProfileStatus";
 import avaPlaceholder from '../../../assets/images/avatar-placeholder.png'
 
-const ProfileInfo = ({profile, status, updateStatus}) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, saveAvatarPhoto}) => {
 
     if (!profile) {
         return <Preloader/>
     }
 
+    const mainPhotoSelected = (e) => {
+        if (e.target.files.length){
+            saveAvatarPhoto(e.target.files[0])
+        }
+    }
     return (
         <>
             <div className={s.description_block}>
                 <h2>{profile.fullName}</h2>
                 <img className={s.avatarImg} src={profile.photos.large || avaPlaceholder} alt=""/>
+                {isOwner && <input
+                    onChange={mainPhotoSelected}
+                    type="file"
+                    name="avatar_upload"
+                    accept=".jpg, .jpeg, .png, .svg"
+                />}
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
                 <div>aboutMe - {profile.aboutMe}</div>
                 <div>lookingForAJobDescription - {profile.lookingForAJobDescription}</div>
