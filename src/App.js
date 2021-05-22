@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, withRouter} from "react-router-dom";
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
 import React, {Component} from "react";
@@ -53,13 +53,13 @@ let AppContainer = compose(
 
 let MainApp = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 {/* <React.StrictMode> */}
                 <AppContainer/>
                 {/* </React.StrictMode> */}
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
