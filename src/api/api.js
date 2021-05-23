@@ -52,6 +52,13 @@ export const profileAPI = {
             })
     },
 
+    saveProfile(profile) {
+        return instance.put(`profile/`, profile)
+            .then(response => {
+                return response.data
+            })
+    },
+
     saveAvatarPhoto(photo) {
         const formData = new FormData()
         formData.append('image', photo)

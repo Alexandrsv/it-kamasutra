@@ -7,9 +7,13 @@ class ProfileStatus extends React.Component {
     }
 
     activateEditMode = () => {
-        this.setState({
-            editMode: true
-        });
+        if (this.props.isOwner) {
+            this.setState({
+                editMode: true
+            })
+        } else {
+            console.log('Стутус менять не дозволено!')
+        }
     }
 
     deactivateEditMode() {
