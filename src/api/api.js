@@ -63,12 +63,12 @@ export const profileAPI = {
         const formData = new FormData()
         formData.append('image', photo)
         return instance.put(`profile/photo/`, formData, {
-            headers:{
-                'Content-Type':'multipart/form-data'
+            headers: {
+                'Content-Type': 'multipart/form-data'
             }
         }).then(response => {
-                return response.data
-            })
+            return response.data
+        })
 
     },
 
@@ -83,13 +83,23 @@ export const authAPI = {
             })
     },
 
-    login(email, password, rememberMe = false) {
-        return instance.post(`auth/login`,{email, password, rememberMe})
+    login(email, password, rememberMe = false, captcha=null) {
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
     },
 
     logout() {
         return instance.delete(`auth/login`)
     },
 
+
+}
+export const securityAPI = {
+
+    getCaptchaURL() {
+        return instance.get(`security/get-captcha-url`,)
+            .then(response => {
+                return response.data
+            })
+    },
 
 }
