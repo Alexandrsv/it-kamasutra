@@ -3,5 +3,9 @@
 }
 
 .paginator {
-    text-align:center;
+    text-align: center;
+}
+
+.pageNumber {
+    cursor: pointer;
 }

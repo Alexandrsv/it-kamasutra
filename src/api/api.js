@@ -29,6 +29,7 @@ export const usersAPI = {
             })
     }
 }
+
 export const profileAPI = {
 
     getProfileData(userId) {

@@ -7,7 +7,6 @@
 
 .pNum {
     font-size: 25px;
-    cursor: pointer;
     overflow: auto;
     height: 50px;
     -webkit-touch-callout: none;

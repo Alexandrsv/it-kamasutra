@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {HashRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, Switch, withRouter} from "react-router-dom";
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
 import React, {Component} from "react";
@@ -18,8 +18,18 @@ const UsersContainer = React.lazy(() => import("./components/Users/UsersContaine
 
 
 class App extends Component {
+
+    catchAllUnhandledErrors(promise) {
+        console.log('Some error occured', promise.reason)
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -31,10 +41,14 @@ class App extends Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/login'} render={() => <Login/>}/>
-                    <Route path={'/dialogs'} render={withSuspense(DialogsContainer)}/>
-                    <Route path={'/profile/:userId?'} render={withSuspense(ProfileContainer)}/>
-                    <Route path={'/users'} render={withSuspense(UsersContainer)}/>
+                    <Switch>
+                        <Route exact path={'/'} render={withSuspense(ProfileContainer)}/>
+                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Route path={'/dialogs'} render={withSuspense(DialogsContainer)}/>
+                        <Route path={'/profile/:userId?'} render={withSuspense(ProfileContainer)}/>
+                        <Route path={'/users'} render={withSuspense(UsersContainer)}/>
+                        <Route path={'*'} render={() => <div>404</div>}/>
+                    </Switch>
                 </div>
             </div>
         );
