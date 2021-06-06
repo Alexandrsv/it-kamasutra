@@ -2,9 +2,18 @@ import React from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/avatar-placeholder.png'
 import {NavLink} from 'react-router-dom'
+import {UserT} from "../../Types/types";
 
 
-let User = ({user, follow, unfollow, followingProgress}) => {
+type PropTypes = {
+    user: UserT
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    followingProgress: Array<number>
+}
+
+
+let User = ({user, follow, unfollow, followingProgress}: PropTypes) => {
 
     return (
         <div>

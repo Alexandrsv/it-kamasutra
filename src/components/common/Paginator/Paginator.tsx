@@ -2,16 +2,23 @@ import React from 'react'
 import s from './Paginator.module.css'
 import cn from 'classnames'
 
+type PropsType = {
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    totalItemsCount: number
+    pageSize: number
+}
 
-let Paginator = ({currentPage, onPageChanged, totalItemsCount, pageSize}) => {
-    let pagesCount = Math.ceil(totalItemsCount / pageSize)
-    let pages = Array(pagesCount).fill(1).map((e, index) => index + 1)
+
+const Paginator: React.FC<PropsType> = ({currentPage, onPageChanged, totalItemsCount, pageSize}) => {
+    let pagesCount: number = Math.ceil(totalItemsCount / pageSize)
+    let pages: Array<number> = Array(pagesCount).fill(1).map((e, index) => index + 1)
     const sliceRange = 5
     const halfRange = Math.ceil(sliceRange / 2)
     let sliceStart = currentPage <= halfRange ? 0 : currentPage - halfRange
     pages = pages.slice(sliceStart, currentPage + halfRange)
 
-    const nextChunk = (step) => {
+    const nextChunk = (step: number) => {
         if ((currentPage + step) > pagesCount) {
             onPageChanged(pagesCount - halfRange)
         } else if ((currentPage + step) < 0) {

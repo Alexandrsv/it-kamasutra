@@ -46,7 +46,7 @@ class App extends Component {
                         <Route path={'/login'} render={() => <Login/>}/>
                         <Route path={'/dialogs'} render={withSuspense(DialogsContainer)}/>
                         <Route path={'/profile/:userId?'} render={withSuspense(ProfileContainer)}/>
-                        <Route path={'/users'} render={withSuspense(UsersContainer)}/>
+                        <Route path={'/users'} render={withSuspense(()=><UsersContainer pageTitle={'Samurai'}/>)}/>
                         <Route path={'*'} render={() => <div>404</div>}/>
                     </Switch>
                 </div>
