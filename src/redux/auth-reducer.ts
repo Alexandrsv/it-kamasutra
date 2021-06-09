@@ -4,14 +4,6 @@ import {stopSubmit} from "redux-form";
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS'
 
-// export type InitialStateT2 = {
-//     userId: number | null
-//     email: string | null
-//     login: string | null
-//     isAuth: boolean
-//     captchaURL: string | null
-// }
-
 let initialState = {
     userId: null as number | null,
     email: null as string | null,

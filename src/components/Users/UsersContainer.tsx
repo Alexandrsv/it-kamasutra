@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import {
     follow,
     requestUsers,
-    setCurrentPage,
-    setUsers,
     unfollow
 } from '../../redux/users-reducer'
 import Users from './Users'
@@ -33,8 +31,6 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (users: Array<UserT>) => any
-    setCurrentPage: (pageNumber: number) => void
     requestUsers: (currentPage: number, pageSize: number) => any
 }
 
@@ -91,10 +87,7 @@ export default compose(
     connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
         follow,
         unfollow,
-        setUsers,
-        setCurrentPage,
         requestUsers,
     }),
     // withAuthRedirect
 )(UserContainer);
-
