@@ -1,13 +1,8 @@
-import {profileAPI} from "../api/api"
-import {stopSubmit} from "redux-form";
+import {FormAction, stopSubmit} from "redux-form";
 import {PhotosT, PostT, ProfileT} from "../Types/types";
-
-const ADD_POST = 'profile/ADD-POST'
-const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
-const SET_STATUS = 'profile/SET_STATUS'
-const DELETE_POST = 'profile/DELETE_POST'
-const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS'
-
+import {profileAPI} from "../api/profile-api";
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {ResultCodesEnum} from "../api/api";
 
 
 let initialState = {
@@ -22,10 +17,11 @@ let initialState = {
 
 export type InitialStateT = typeof initialState
 
-const profileReducer = (state = initialState, action: any):InitialStateT => {
+
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateT => {
 
     switch (action.type) {
-        case ADD_POST:
+        case 'profile/ADD-POST':
             let newPost = {
                 id: Math.floor(Math.random() * 500),
                 message: action.newPostText,
@@ -34,13 +30,13 @@ const profileReducer = (state = initialState, action: any):InitialStateT => {
             return {
                 ...state,
                 posts: [newPost, ...state.posts],
-                newPostText:''
+                newPostText: ''
             }
-        case SET_USER_PROFILE:
+        case 'profile/SET_USER_PROFILE':
             return {...state, profile: action.profile}
-        case SET_STATUS:
+        case 'profile/SET_STATUS':
             return {...state, status: action.status}
-        case SAVE_PHOTO_SUCCESS:
+        case 'profile/SAVE_PHOTO_SUCCESS':
             return {
                 ...state,
                 profile: {
@@ -48,7 +44,7 @@ const profileReducer = (state = initialState, action: any):InitialStateT => {
                     photos: action.photosUrl
                 } as ProfileT
             }
-        case DELETE_POST:
+        case 'profile/DELETE_POST':
             return {
                 ...state, posts: state.posts.filter((p) => {
                     return p.id !== action.postId
@@ -59,54 +55,34 @@ const profileReducer = (state = initialState, action: any):InitialStateT => {
     }
 }
 
-type AddPostActionCreatorAT = {
-    type: typeof ADD_POST
-    newPostText: string
+type ActionsTypes = InferActionsTypes<typeof profileActions>
+export const profileActions = {
+    addPostActionCreator: (newPostText: string) => ({type: 'profile/ADD-POST', newPostText} as const),
+    setUserProfile: (profile: ProfileT) => ({type: 'profile/SET_USER_PROFILE', profile} as const),
+    setStatus: (status: string) => ({type: 'profile/SET_STATUS', status} as const),
+    deletePost: (postId: number) => ({type: 'profile/DELETE_POST', postId} as const),
+    savePhotoSuccess: (photosUrl: PhotosT) => ({type: 'profile/SAVE_PHOTO_SUCCESS', photosUrl} as const),
 }
-export const addPostActionCreator = (newPostText: string):AddPostActionCreatorAT => ({type: ADD_POST, newPostText})
 
-type SetUserProfileAT = {
-    type: typeof SET_USER_PROFILE
-    profile: ProfileT
-}
-export const setUserProfile = (profile:ProfileT):SetUserProfileAT => ({type: SET_USER_PROFILE, profile})
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>
 
-type SetStatusAT = {
-    type: typeof SET_STATUS
-    status: string
-}
-export const setStatus = (status:string):SetStatusAT => ({type: SET_STATUS, status})
-
-type DeletePostAT = {
-    type: typeof DELETE_POST
-    postId: number
-}
-export const deletePost = (postId:number):DeletePostAT => ({type: DELETE_POST, postId})
-
-type PhotosUrlAT = {
-    type: typeof SAVE_PHOTO_SUCCESS
-    photosUrl: PhotosT
-}
-export const savePhotoSuccess = (photosUrl:PhotosT):PhotosUrlAT => ({type: SAVE_PHOTO_SUCCESS, photosUrl})
-
-
-export const getUserProfileData = (userId:number) => async (dispatch:any) => {
+export const getUserProfileData = (userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.getProfileData(userId)
-    dispatch(setUserProfile(response))
+    dispatch(profileActions.setUserProfile(response))
 }
 
 
-export const getStatus = (userId:number) => async (dispatch:any) => {
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.getStatus(userId)
-    dispatch(setStatus(response))
+    dispatch(profileActions.setStatus(response))
 }
 
 
-export const updateStatus = (status:string) => async (dispatch:any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let response = await profileAPI.updateStatus(status)
-        if (response.resultCode === 0) {
-            dispatch(setStatus(status))
+        if (response.resultCode === ResultCodesEnum.Success) {
+            dispatch(profileActions.setStatus(status))
         }
     } catch (e) {
         //
@@ -114,18 +90,20 @@ export const updateStatus = (status:string) => async (dispatch:any) => {
 
 }
 
-export const saveAvatarPhoto = (photo:any) => async (dispatch:any) => {
+export const saveAvatarPhoto = (photo: File): ThunkType => async (dispatch) => {
     let response = await profileAPI.saveAvatarPhoto(photo)
-    if (response.resultCode === 0) {
-        dispatch(savePhotoSuccess(response.data.photos))
+    if (response.resultCode === ResultCodesEnum.Success) {
+        dispatch(profileActions.savePhotoSuccess(response.data.photos))
     }
 }
 
-export const saveProfile = (profile:ProfileT) => async (dispatch:any, getState:any) => {
+export const saveProfile = (profile: ProfileT): ThunkType => async (dispatch, getState) => {
     let response = await profileAPI.saveProfile(profile)
     const userId = getState().auth.userId
-    if (response.resultCode === 0) {
-        dispatch(getUserProfileData(userId))
+    if (response.resultCode === ResultCodesEnum.Success) {
+        if (userId!=null) {
+            dispatch(getUserProfileData(userId))
+        } else throw Error('userId не можут быть пустым!')
     } else {
         let message = response.messages.length > 0 ? response.messages[0] : 'Some error'
         dispatch(stopSubmit('edit-profile', {_error: message}))

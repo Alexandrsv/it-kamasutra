@@ -30,5 +30,5 @@ export type UserT = {
     name: string
     status: string
     followed: boolean
-    photos:PhotosT
+    photos: PhotosT
 }
