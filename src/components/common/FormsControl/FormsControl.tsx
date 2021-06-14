@@ -30,3 +30,5 @@ export const InputComponent: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, children, ...restProps} = props
     return (<FormControl {...props}><input {...input} {...restProps}/></FormControl>)
 }
+
+export type GetStringKeys<T> = Extract<keyof T, string>

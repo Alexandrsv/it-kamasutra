@@ -2,22 +2,27 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialodItem/DialogItem";
 import Message from "./Message/Message";
-import {Redirect} from "react-router-dom"
 import AddMessageForm from "./AddMessageForm/AddMessageForm";
+import {InitialStateT} from "../../redux/dialogs-reducer";
+
+type PropsType = {
+    dialogsPage: InitialStateT
+    sendMessage: (messageText: string) => void
+}
+
+export type NewMessageFormType = {
+    newMessageBody: string
+}
 
 
-const Dialogs = (props) => {
+const Dialogs: React.FC<PropsType> = (props) => {
 
     let state = props.dialogsPage
     let dialogElements = state.dialogs.map((el) => <DialogItem id={el.id} key={el.id} name={el.name}/>)
     let messageElements = state.messages.map((el) => <Message id={el.id} key={el.id} message={el.message}/>)
 
-    const onSendMessageClick = (formData) => {
+    const onSendMessageClick: any = (formData: NewMessageFormType) => {
         props.sendMessage(formData.newMessageBody)
-    }
-
-    if (!props.isAuth) {
-        return <Redirect to={'/login'}/>
     }
 
     return (
@@ -39,8 +44,6 @@ const Dialogs = (props) => {
         </div>
     );
 };
-
-
 
 
 export default Dialogs;

@@ -57,7 +57,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 
 type ActionsTypes = InferActionsTypes<typeof profileActions>
 export const profileActions = {
-    addPostActionCreator: (newPostText: string) => ({type: 'profile/ADD-POST', newPostText} as const),
+    addPostActionCreator: (newPostText: string) => ({type: 'profile/ADD-POST', newPostText} as const), //TODO: Эта часть не актуальная, т.к работает через стороннюю либу
     setUserProfile: (profile: ProfileT) => ({type: 'profile/SET_USER_PROFILE', profile} as const),
     setStatus: (status: string) => ({type: 'profile/SET_STATUS', status} as const),
     deletePost: (postId: number) => ({type: 'profile/DELETE_POST', postId} as const),

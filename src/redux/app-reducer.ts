@@ -1,5 +1,6 @@
 import {getAuthUserData} from "./auth-reducer";
 import {InferActionsTypes} from "./redux-store";
+import {Dispatch} from "redux";
 
 let initialState = {
     initialized: false
@@ -30,7 +31,7 @@ export const actions = {
 
 
 export const initializeApp = () => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         let promise = [dispatch(getAuthUserData())]
         Promise.all([promise])
             .then(() => {

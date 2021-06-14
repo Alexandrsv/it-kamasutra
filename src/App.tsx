@@ -9,17 +9,19 @@ import {connect, Provider} from "react-redux";
 import {compose} from 'redux';
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import store from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
 
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = { initializeApp: () => void }
 
-class App extends Component {
+class App extends Component<MapPropsType & DispatchPropsType> {
 
-    catchAllUnhandledErrors(promise) {
+    catchAllUnhandledErrors(promise: PromiseRejectionEvent) {
         console.log('Some error occured', promise.reason)
     }
 
@@ -42,11 +44,11 @@ class App extends Component {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Switch>
-                        <Route exact path={'/'} render={withSuspense(ProfileContainer)}/>
+                        <Route exact path={'/'} render={withSuspense<any>(ProfileContainer)}/>
                         <Route path={'/login'} render={() => <Login/>}/>
-                        <Route path={'/dialogs'} render={withSuspense(DialogsContainer)}/>
-                        <Route path={'/profile/:userId?'} render={withSuspense(ProfileContainer)}/>
-                        <Route path={'/users'} render={withSuspense(()=><UsersContainer pageTitle={'Samurai'}/>)}/>
+                        <Route path={'/dialogs'} render={withSuspense<any>(DialogsContainer)}/>
+                        <Route path={'/profile/:userId?'} render={withSuspense<any>(ProfileContainer)}/>
+                        <Route path={'/users'} render={withSuspense(() => <UsersContainer pageTitle={'Samurai'}/>)}/>
                         <Route path={'*'} render={() => <div>404</div>}/>
                     </Switch>
                 </div>
@@ -55,17 +57,17 @@ class App extends Component {
     }
 }
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized,
 
 })
 
-let AppContainer = compose(
+let AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp, logout},
     ))(App);
 
-let MainApp = () => {
+let MainApp: React.FC = () => {
     return (
         <HashRouter>
             <Provider store={store}>

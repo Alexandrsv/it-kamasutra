@@ -1,11 +1,22 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, FC, useState} from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatus from "./ProfileStatus";
 import avaPlaceholder from '../../../assets/images/avatar-placeholder.png'
 import ProfileDataForm from "./ProfileDataForm";
+import {ProfileT} from "../../../Types/types";
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, saveAvatarPhoto, saveProfile}) => {
+type PropsType = {
+    profile: ProfileT | null
+    status: string
+    updateStatus: (status: string) => void
+    isOwner: boolean
+    saveAvatarPhoto: (photo: File) => void
+    saveProfile: (profile: ProfileT) => Promise<any>
+
+}
+
+const ProfileInfo: FC<PropsType> = ({profile, status, updateStatus, isOwner, saveAvatarPhoto, saveProfile}) => {
 
         let [editMode, setEditMode] = useState(false)
 
@@ -13,16 +24,16 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, saveAvatarPhoto, s
             return <Preloader/>
         }
 
-        const mainPhotoSelected = (e) => {
-            if (e.target.files.length) {
+        const mainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+            if (e.target.files?.length) {
                 saveAvatarPhoto(e.target.files[0])
             }
         }
 
-        const onSubmit = (formData) => {
+        const onSubmit = (formData: any) => {
             console.log(formData)
-            saveProfile(formData) //решение не канон
-                .then(()=> {
+            saveProfile(formData) //решение не канон, т.к. ждем ответа из БЛ
+                .then(() => {
                     setEditMode(false)
                 })
         }
@@ -58,7 +69,14 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, saveAvatarPhoto, s
     }
 ;
 
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
+type ProfileDataPropsType = {
+    profile: ProfileT
+    isOwner: boolean
+    goToEditMode: () => void
+
+}
+
+const ProfileData: FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
     return (
         <div>
             {isOwner && <div>
@@ -79,8 +97,11 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
     )
 }
 
-
-export const Contacts = ({contactTitle, contactValue}) => {
+type ContactsPropstype = {
+    contactTitle: string
+    contactValue: string
+}
+export const Contacts: FC<ContactsPropstype> = ({contactTitle, contactValue}) => {
     let url
     if (!/^https?:\/\//.test(contactValue) && contactValue) {
         url = 'https://' + contactValue

@@ -1,9 +1,21 @@
-import React from 'react';
-import {Field, reduxForm} from "redux-form";
+import React, {FC} from 'react';
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {InputComponent, Textarea} from "../../common/FormsControl/FormsControl";
 import s from "../../common/FormsControl/FormsControl.module.css";
+import {ProfileT} from "../../../Types/types";
 
-const ProfileDataForm = ({profile, isOwner, handleSubmit, error}) => {
+type PropsType = {
+    profile: ProfileT
+    isOwner: boolean
+}
+
+
+const ProfileDataForm: FC<InjectedFormProps<ProfileT, PropsType> & PropsType> = ({
+                                                                                     profile,
+                                                                                     isOwner,
+                                                                                     handleSubmit,
+                                                                                     error
+                                                                                 }) => {
     return (
         <form onSubmit={handleSubmit}>
             {isOwner && <div>
@@ -32,4 +44,4 @@ const ProfileDataForm = ({profile, isOwner, handleSubmit, error}) => {
     );
 };
 
-export default reduxForm({form: 'edit-profile'})(ProfileDataForm);
+export default reduxForm<ProfileT, PropsType>({form: 'edit-profile'})(ProfileDataForm);

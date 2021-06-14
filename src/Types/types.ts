@@ -24,6 +24,7 @@ export type ProfileT = {
     fullName: string
     contacts: ContactsT
     photos: PhotosT
+    aboutMe: string
 }
 export type UserT = {
     id: number
@@ -31,4 +32,14 @@ export type UserT = {
     status: string
     followed: boolean
     photos: PhotosT
+}
+
+export type MessagesT = {
+    id: number
+    message: string
+}
+
+export type DialogsT = {
+    id: number
+    name: string
 }

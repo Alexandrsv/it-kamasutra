@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/avatar-placeholder.png'
 import {NavLink} from 'react-router-dom'
@@ -13,7 +13,7 @@ type PropTypes = {
 }
 
 
-let User = ({user, follow, unfollow, followingProgress}: PropTypes) => {
+const User: FC<PropTypes> = ({user, follow, unfollow, followingProgress}) => {
 
     return (
         <div>
