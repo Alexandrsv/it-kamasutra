@@ -13,7 +13,7 @@ export const UsersPage: FC<UsersPagePropsType> = () => {
     const isFetching = useSelector(getIsFetching)
 
     return <>
-            {isFetching && <Preloader/>}
+            {isFetching ? <Preloader/> : null}
             <Users/>
     </>
 }

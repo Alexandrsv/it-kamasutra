@@ -12,7 +12,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    filter: {term: '', friend: false as boolean | null},
+    filter: {term: '', friend: null as boolean | null},
     followingInProgress: [] as Array<number>, //array of userId
 }
 

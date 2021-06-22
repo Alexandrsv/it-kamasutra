@@ -11,7 +11,7 @@ import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
-import { UsersPage } from './components/Users/UsersContainer';
+import {UsersPage} from './components/Users/UsersContainer';
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
@@ -48,7 +48,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                         <Route path={'/login'} render={() => <LoginPage/>}/>
                         <Route path={'/dialogs'} render={withSuspense<any>(DialogsContainer)}/>
                         <Route path={'/profile/:userId?'} render={withSuspense<any>(ProfileContainer)}/>
-                        <Route path={'/users'} render={withSuspense(() => <UsersPage pageTitle={'Samurai'}/>)}/>
+                        <Route path={'/users'} render={() => <UsersPage pageTitle={'Samurai'}/>}/>
                         <Route path={'*'} render={() => <div>404</div>}/>
                     </Switch>
                 </div>
@@ -71,9 +71,9 @@ let MainApp: React.FC = () => {
     return (
         <HashRouter>
             <Provider store={store}>
-                {/* <React.StrictMode> */}
-                <AppContainer/>
-                {/* </React.StrictMode> */}
+                <React.StrictMode>
+                    <AppContainer/>
+                </React.StrictMode>
             </Provider>
         </HashRouter>
     )
