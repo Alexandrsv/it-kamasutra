@@ -22,6 +22,7 @@ const {Header, Content, Footer, Sider} = Layout;
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
+const ChatPage = React.lazy(() => import("./pages/Chat/ChatPage"))
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = { initializeApp: () => void }
@@ -77,7 +78,10 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                                 <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Разработчики">
                                     <Menu.Item key="5"><Link to={'/users'}>Профили</Link></Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub3" icon={<NotificationOutlined/>} title="404">
+                                <SubMenu key="sub3" icon={<LaptopOutlined/>} title="Чат">
+                                    <Menu.Item key="6"><Link to={'/chat'}>Чат</Link></Menu.Item>
+                                </SubMenu>
+                                <SubMenu key="sub4" icon={<NotificationOutlined/>} title="404">
                                     <Menu.Item key="9"><Link to={'/news'}>News</Link></Menu.Item>
                                     <Menu.Item key="10"><Link to={'/music'}>Music</Link></Menu.Item>
                                     <Menu.Item key="11"><Link to={'/settings'}>Settings</Link></Menu.Item>
@@ -89,6 +93,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                             <Switch>
                                 <Route exact path={'/'} render={withSuspense<any>(ProfileContainer)}/>
                                 <Route path={'/login'} render={() => <LoginPage/>}/>
+                                <Route path={'/chat'} render={withSuspense(ChatPage)}/>
                                 <Route path={'/dialogs'} render={withSuspense<any>(DialogsContainer)}/>
                                 <Route path={'/profile/:userId?'} render={withSuspense<any>(ProfileContainer)}/>
                                 <Route path={'/users'} render={() => <UsersPage pageTitle={'Samurai'}/>}/>
@@ -117,9 +122,9 @@ let MainApp: React.FC = () => {
     return (
         <HashRouter>
             <Provider store={store}>
-                <React.StrictMode>
+                {/*<React.StrictMode>*/}
                     <AppContainer/>
-                </React.StrictMode>
+                {/*</React.StrictMode>*/}
             </Provider>
         </HashRouter>
     )
