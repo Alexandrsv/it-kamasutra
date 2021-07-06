@@ -2,14 +2,11 @@ import React, {FC, useEffect, useState} from 'react';
 import {Button} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import {Link} from 'react-router-dom';
+import {ChatMessageType} from '../../api/chat-api';
+import {useDispatch, useSelector} from 'react-redux';
+import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
+import { AppStateType } from '../../redux/redux-store';
 
-
-export type ChatMessageType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
 
 const ChatPage: FC = () => {
     return (
@@ -20,54 +17,26 @@ const ChatPage: FC = () => {
 };
 
 const Chat: FC = () => {
-    const [wsChannel, setWsChannel] = useState<WebSocket | null>()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        let ws: WebSocket
-
-        const closeHandler = () => {
-            console.log('Close WS')
-            setTimeout(createChannel, 3000)
-        }
-
-        function createChannel() {
-            ws?.removeEventListener('close', closeHandler)
-            ws?.close()
-            ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
-            ws?.addEventListener('close', closeHandler)
-            setWsChannel(ws)
-        }
-
-        createChannel()
+        dispatch(startMessagesListening())
         return () => {
-            ws.removeEventListener('close', closeHandler)
-            ws.close()
+            dispatch(stopMessagesListening())
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <div>
-            <Messages wsChannel={wsChannel}/>
-            <AddMessageForm wsChannel={wsChannel}/>
+            <Messages/>
+            <AddMessageForm/>
         </div>
     );
 }
 
-const Messages: FC<{ wsChannel: WebSocket | null | undefined }> = ({wsChannel}) => {
+const Messages: FC<{  }> = () => {
 
-    const [messages, setMessages] = useState<ChatMessageType[]>([])
-
-    useEffect(() => {
-        const messageHandler = (e: MessageEvent) => {
-            const newMessage = JSON.parse(e.data);
-            console.log(newMessage)
-            setMessages((pervMess) => [...pervMess, ...newMessage])
-        };
-        wsChannel?.addEventListener('message', messageHandler)
-        return () => {
-            wsChannel?.removeEventListener('message', messageHandler)
-        }
-    }, [wsChannel])
+    const messages = useSelector((s:AppStateType)=>s.chat.messages)
 
     return (
         <div style={{height: '500px', overflowY: 'auto'}}>
@@ -77,24 +46,17 @@ const Messages: FC<{ wsChannel: WebSocket | null | undefined }> = ({wsChannel}) 
     );
 };
 
-const AddMessageForm: FC<{ wsChannel: WebSocket | null | undefined }> = ({wsChannel}) => {
+const AddMessageForm: FC<{}> = () => {
     const [newMessage, setNewMessage] = useState('')
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+    // const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
 
-    useEffect(() => {
-        const openHandler = () => setReadyStatus('ready');
-        wsChannel?.addEventListener('open', openHandler)
-        return () => {
-            wsChannel?.removeEventListener('open', openHandler)
-        }
-    }, [wsChannel])
-
+    const dispatch = useDispatch()
     const onChange = (e: any) => {
         setNewMessage(e.currentTarget.value)
     }
-    const sendMessage = () => {
+    const onSendMessage = () => {
         if (!!newMessage) {
-            wsChannel?.send(newMessage)
+            dispatch(sendMessage(newMessage))
             setNewMessage('')
         }
     }
@@ -104,8 +66,7 @@ const AddMessageForm: FC<{ wsChannel: WebSocket | null | undefined }> = ({wsChan
                 <TextArea onChange={onChange} value={newMessage}/>
             </div>
             <div>
-                <Button disabled={readyStatus == null || readyStatus !== 'ready'}
-                        onClick={sendMessage}>Отправить</Button>
+                <Button onClick={onSendMessage}>Отправить</Button>
             </div>
         </div>
     );
